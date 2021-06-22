@@ -1,9 +1,8 @@
-package com.example.newsapp.android
+package com.example.newsapp.android.ui.feed
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,12 +17,7 @@ fun ComposablePreview(@PreviewParameter(SampleArticleProvider::class) articles: 
         modifier = Modifier.padding(16.dp)
     ) {
         items(articles) { item ->
-            breakingNewsListItem(article = item)
+            BreakingNewsListItem(article = item)
         }
     }
-}
-
-@Composable
-fun SimpleComposable(greet: String) {
-    Text("Hello World $greet")
 }

@@ -17,13 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column() {
-                TopAppBar(
-                    title = { Text(text = "AppBar") }
-                )
-                NewsOfTheDay(Article.dummyData.first())
-                ComposablePreview(articles = Article.dummyData)
-            }
+            NewsApp()
         }
     }
 }

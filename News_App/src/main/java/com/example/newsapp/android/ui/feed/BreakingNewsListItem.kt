@@ -1,4 +1,4 @@
-package com.example.newsapp.android
+package com.example.newsapp.android.ui.feed
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ class SampleArticleProvider : PreviewParameterProvider<Article> {
 
 @Preview
 @Composable
-fun breakingNewsListItem(@PreviewParameter(SampleArticleProvider::class) article: Article) {
+fun BreakingNewsListItem(@PreviewParameter(SampleArticleProvider::class) article: Article) {
     Column(Modifier.background(
         color = Color.White
     )) {

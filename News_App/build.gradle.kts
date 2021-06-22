@@ -26,6 +26,8 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
     implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
 
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha03")
+
     implementation("com.google.accompanist:accompanist-coil:0.12.0")
 
     // UI Tests

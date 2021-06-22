@@ -1,4 +1,4 @@
-package com.example.newsapp.android
+package com.example.newsapp.android.ui.feed
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
