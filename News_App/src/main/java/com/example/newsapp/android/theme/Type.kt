@@ -38,7 +38,7 @@ val NewsAppTypography = Typography(
     ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
+        fontSize = 14.sp,
         letterSpacing = 0.15.sp
     ),
     subtitle2 = TextStyle(

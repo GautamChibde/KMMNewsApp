@@ -17,14 +17,14 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.newsapp.android.ui.feed.Feed
+import com.example.newsapp.android.ui.feed.FeedsPage
 import com.example.newsapp.android.ui.home.Profile
 import com.example.newsapp.android.ui.home.Search
 
 
 fun NavGraphBuilder.addHomeGraph() {
     composable(HomeSections.FEED.route) { from ->
-        Feed()
+        FeedsPage()
     }
     composable(HomeSections.SEARCH.route) { from ->
         Search()

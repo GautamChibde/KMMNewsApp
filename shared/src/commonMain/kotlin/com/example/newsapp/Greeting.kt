@@ -17,7 +17,7 @@ data class Article(
     companion object {
         val dummyData = listOf(
             Article(
-                author = "Laura He, CNN Business",
+                author = "1Laura He, CNN Business",
                 title = "A huge backlog at China's ports could spoil your holiday shopping this year - CNN ",
                 description = "A coronavirus outbreak in southern China has clogged ports critical to global trade, causing a shipping backlog that could take months to clear and lead to shortages during the year-end holiday shopping season.",
                 url = "https://www.cnn.com/2021/06/17/business/china-ports-global-supply-chain-intl-hnk/index.html",
@@ -25,27 +25,27 @@ data class Article(
                 publishedAt = "2021-06-18T02:36:00Z",
             ),
             Article(
-                author = "Laura He, CNN Business",
+                author = "2Laura He, CNN Business",
                 title = "A huge backlog at China's ports could spoil your holiday shopping this year - CNN ",
                 description = "A coronavirus outbreak in southern China has clogged ports critical to global trade, causing a shipping backlog that could take months to clear and lead to shortages during the year-end holiday shopping season.",
                 url = "https://www.cnn.com/2021/06/17/business/china-ports-global-supply-chain-intl-hnk/index.html",
-                urlToImage = "https://cdn.cnn.com/cnnnext/dam/assets/210616031524-china-ports-global-supply-chain-intl-hnk-restricted-super-tease.jpg",
+                urlToImage = "https://static.foxnews.com/foxnews.com/content/uploads/2021/06/AP21173248571574.jpg",
                 publishedAt = "2021-06-18T02:36:00Z",
             ),
             Article(
-                author = "Laura He, CNN Business",
+                author = "3Laura He, CNN Business",
                 title = "A huge backlog at China's ports could spoil your holiday shopping this year - CNN ",
                 description = "A coronavirus outbreak in southern China has clogged ports critical to global trade, causing a shipping backlog that could take months to clear and lead to shortages during the year-end holiday shopping season.",
                 url = "https://www.cnn.com/2021/06/17/business/china-ports-global-supply-chain-intl-hnk/index.html",
-                urlToImage = "https://cdn.cnn.com/cnnnext/dam/assets/210616031524-china-ports-global-supply-chain-intl-hnk-restricted-super-tease.jpg",
+                urlToImage = "https://cdn.cnn.com/cnnnext/dam/assets/210621233036-florida-manatee-county-coronavirus-outbreak-super-tease.jpg",
                 publishedAt = "2021-06-18T02:36:00Z",
             ),
             Article(
-                author = "Laura He, CNN Business",
+                author = "4Laura He, CNN Business",
                 title = "A huge backlog at China's ports could spoil your holiday shopping this year - CNN ",
                 description = "A coronavirus outbreak in southern China has clogged ports critical to global trade, causing a shipping backlog that could take months to clear and lead to shortages during the year-end holiday shopping season.",
                 url = "https://www.cnn.com/2021/06/17/business/china-ports-global-supply-chain-intl-hnk/index.html",
-                urlToImage = "https://cdn.cnn.com/cnnnext/dam/assets/210616031524-china-ports-global-supply-chain-intl-hnk-restricted-super-tease.jpg",
+                urlToImage = "https://cdn.cnn.com/cnnnext/dam/assets/210622012019-myanmar-mandalay-fighting-intl-hnk-map-super-tease.jpg",
                 publishedAt = "2021-06-18T02:36:00Z",
             )
         )
