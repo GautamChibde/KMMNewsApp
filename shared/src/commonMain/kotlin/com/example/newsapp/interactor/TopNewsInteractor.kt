@@ -1,6 +1,8 @@
 package com.example.newsapp.interactor
 
 import com.example.newsapp.api.NewsAppHttpClient
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.coroutineContext
 
 interface TopNewsResults {
     fun onResults()

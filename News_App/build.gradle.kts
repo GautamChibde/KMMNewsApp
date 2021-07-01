@@ -4,6 +4,7 @@ plugins {
 }
 
 val composeVersion = "1.0.0-beta09"
+val koinVersion = "3.0.2"
 
 dependencies {
     implementation(project(":shared"))
@@ -29,6 +30,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha03")
 
     implementation("com.google.accompanist:accompanist-coil:0.12.0")
+    implementation("io.insert-koin:koin-android:${koinVersion}")
+    implementation("io.insert-koin:koin-core:${koinVersion}")
 
     // UI Tests
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")

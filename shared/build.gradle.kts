@@ -9,6 +9,7 @@ plugins {
 
 version = "1.0"
 val ktorVersion = "1.5.0"
+val koinVersion = "3.0.2"
 
 kotlin {
     android()
@@ -38,6 +39,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation("io.insert-koin:koin-core:${koinVersion}")
             }
         }
         val commonTest by getting {

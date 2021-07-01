@@ -1,6 +1,6 @@
 package com.example.newsapp.api
 
-import com.example.newsapp.model.Article
+import com.example.newsapp.model.TopHeadLinesResponse
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
@@ -38,7 +38,7 @@ class NewsAppHttpClient(): NewsApi {
 
     private fun HttpRequestBuilder.buildUrl(path: String, parameters: List<Pair<String, String>>) {
         url {
-            takeFrom("https://newsapi.org/v2/")
+            takeFrom("https://newsapi.org/")
             encodedPath = path
         }
         parameter("apiKey", "49b9880188a443898d903121afa46e13")
@@ -47,9 +47,9 @@ class NewsAppHttpClient(): NewsApi {
         }
     }
 
-    override suspend fun getTopHeadLines(): List<Article> {
-        return httpClient.get<List<Article>>() {
-            buildUrl(path = "top-headlines", listOf(Pair("country", "us")))
+    override suspend fun getTopHeadLines(): TopHeadLinesResponse {
+        return httpClient.get<TopHeadLinesResponse>() {
+            buildUrl(path = "v2/top-headlines", listOf(Pair("country", "us")))
         }
     }
 }
