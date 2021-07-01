@@ -5,7 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.android.theme.NewsAppTheme
 import com.example.newsapp.android.ui.BottomBar
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @Composable
 fun NewsApp() {
     NewsAppTheme {

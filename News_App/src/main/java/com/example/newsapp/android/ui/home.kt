@@ -11,6 +11,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -19,9 +20,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.newsapp.android.ui.feed.FeedsPage
 import com.example.newsapp.android.ui.home.Profile
-import com.example.newsapp.android.ui.home.Search
+import com.example.newsapp.android.ui.search.Search
+import com.google.accompanist.pager.ExperimentalPagerApi
 
 
+@ExperimentalPagerApi
 fun NavGraphBuilder.addHomeGraph() {
     composable(HomeSections.FEED.route) { from ->
         FeedsPage()
@@ -29,9 +32,9 @@ fun NavGraphBuilder.addHomeGraph() {
     composable(HomeSections.SEARCH.route) { from ->
         Search()
     }
-    composable(HomeSections.PROFILE.route) {
-        Profile()
-    }
+//    composable(HomeSections.PROFILE.route) {
+//        Profile()
+//    }
 }
 
 enum class HomeSections(
@@ -40,14 +43,14 @@ enum class HomeSections(
     val route: String
 ) {
     FEED("Feed", Icons.Outlined.Home, "home/feed"),
-    SEARCH("Search", Icons.Outlined.Search, "home/search"),
-    PROFILE("Profile", Icons.Outlined.AccountCircle, "home/profile")
+    SEARCH("Search", Icons.Outlined.Search, "home/search")
+//    PROFILE("Profile", Icons.Outlined.AccountCircle, "home/profile")
 }
 
 
 @Composable
 fun BottomBar(navController: NavController) {
-    BottomNavigation {
+    BottomNavigation(backgroundColor = Color.White) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         val currentDestination = navBackStackEntry?.destination

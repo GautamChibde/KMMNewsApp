@@ -32,6 +32,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-coil:0.12.0")
     implementation("io.insert-koin:koin-android:${koinVersion}")
     implementation("io.insert-koin:koin-core:${koinVersion}")
+    implementation("com.google.accompanist:accompanist-pager:0.12.0")
 
     // UI Tests
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
