@@ -19,10 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.newsapp.model.Article
 import com.example.newsapp.android.theme.NewsAppTypography
 import com.example.newsapp.android.ui.HomeViewModel
+import com.example.newsapp.interactor.HomePageResults
 import com.google.accompanist.coil.rememberCoilPainter
 
 class SampleArticleListProvider : PreviewParameterProvider<List<Article>> {
@@ -40,14 +41,13 @@ class SampleArticleProvider : PreviewParameterProvider<Article> {
 }
 
 @Composable
-fun FeedsPage() {
-    val homeViewModel = viewModel<HomeViewModel>()
-    homeViewModel.fetchTopNews()
-    val articles = homeViewModel.topNewsResults.observeAsState(listOf())
-    val firstItem = articles.value.firstOrNull()
+fun FeedsPage(viewModel: HomeViewModel) {
+    viewModel.getHomePageResults()
+    val results = viewModel.topNewsResults.observeAsState(HomePageResults(null, listOf()))
+    val firstItem = results.value.topNews
     Column {
         TopNews(article = firstItem)
-        BreakingNewsItems(articles = articles.value)
+        BreakingNewsItems(articles = results.value.articles)
     }
 }
 

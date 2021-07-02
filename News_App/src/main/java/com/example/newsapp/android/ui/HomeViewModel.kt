@@ -4,23 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.api.NewsAppHttpClient
-import com.example.newsapp.model.Article
+import com.example.newsapp.interactor.HomePageInteractor
+import com.example.newsapp.interactor.HomePageResults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel(private val homePageInteractor: HomePageInteractor) : ViewModel() {
 
+    private val _topNewsResults = MutableLiveData<HomePageResults>()
 
-    private val _topNewsResults = MutableLiveData<List<Article>>()
+    val topNewsResults: LiveData<HomePageResults> = _topNewsResults
 
-    val topNewsResults: LiveData<List<Article>> = _topNewsResults
-
-    fun fetchTopNews() {
-        val httpClient = NewsAppHttpClient()
+    fun getHomePageResults() {
         viewModelScope.launch(Dispatchers.IO) {
-            val topNews = httpClient.getTopHeadLines()
-            _topNewsResults.postValue(topNews.articles)
+            val results = homePageInteractor.fetchHomePageResults()
+            _topNewsResults.postValue(results)
         }
     }
 }

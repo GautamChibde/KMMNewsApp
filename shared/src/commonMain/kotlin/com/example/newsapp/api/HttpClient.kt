@@ -1,5 +1,6 @@
 package com.example.newsapp.api
 
+import com.example.newsapp.interactor.HomePageResults
 import com.example.newsapp.model.TopHeadLinesResponse
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -9,47 +10,38 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class NewsAppHttpClient(): NewsApi {
+fun getKtorHttpClient() = HttpClient(CIO) {
 
-    private val httpClient = HttpClient(CIO) {
+    install(JsonFeature) {
+        serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+            prettyPrint = true
+            isLenient = true
+            ignoreUnknownKeys = true
+        })
+    }
 
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
-                prettyPrint = true
-                isLenient = true
-                ignoreUnknownKeys = true
-            })
-        }
+    engine {
+        requestTimeout = 100_000
+    }
 
-        engine {
-            requestTimeout = 100_000
-        }
-
-        install(Logging) {
-            logger = object : Logger {
-                override fun log(message: String) {
-                    print("message $message")
-                }
+    install(Logging) {
+        logger = object : Logger {
+            override fun log(message: String) {
+                print("message $message")
             }
-
-            level = LogLevel.INFO
         }
+
+        level = LogLevel.INFO
     }
+}
 
-    private fun HttpRequestBuilder.buildUrl(path: String, parameters: List<Pair<String, String>>) {
-        url {
-            takeFrom("https://newsapi.org/")
-            encodedPath = path
-        }
-        parameter("apiKey", "49b9880188a443898d903121afa46e13")
-        parameters.forEach {
-            parameter(it.first, it.second)
-        }
+fun HttpRequestBuilder.buildUrl(path: String, parameters: List<Pair<String, String>>) {
+    url {
+        takeFrom("https://newsapi.org/")
+        encodedPath = path
     }
-
-    override suspend fun getTopHeadLines(): TopHeadLinesResponse {
-        return httpClient.get<TopHeadLinesResponse>() {
-            buildUrl(path = "v2/top-headlines", listOf(Pair("country", "us")))
-        }
+    parameter("apiKey", "49b9880188a443898d903121afa46e13")
+    parameters.forEach {
+        parameter(it.first, it.second)
     }
 }

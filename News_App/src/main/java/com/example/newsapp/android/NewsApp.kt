@@ -5,11 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.android.theme.NewsAppTheme
 import com.example.newsapp.android.ui.BottomBar
+import com.example.newsapp.android.ui.HomeViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
 @Composable
-fun NewsApp() {
+fun NewsApp(viewModel: HomeViewModel) {
     NewsAppTheme {
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState()
@@ -21,7 +22,8 @@ fun NewsApp() {
         ) {
             NewsAppNavGraph(
                 navController = navController,
-                scaffoldState = scaffoldState
+                scaffoldState = scaffoldState,
+                homeViewModel = viewModel
             )
         }
 

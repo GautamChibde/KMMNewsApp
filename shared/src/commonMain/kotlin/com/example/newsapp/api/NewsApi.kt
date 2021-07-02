@@ -1,7 +1,7 @@
 package com.example.newsapp.api
 
-import com.example.newsapp.model.TopHeadLinesResponse
+import com.example.newsapp.interactor.HomePageResults
 
 interface NewsApi {
-    suspend fun getTopHeadLines() : TopHeadLinesResponse
+    suspend fun fetchHomePageResults() : HomePageResults
 }
