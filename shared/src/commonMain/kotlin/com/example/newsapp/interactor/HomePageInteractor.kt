@@ -2,32 +2,37 @@ package com.example.newsapp.interactor
 
 import com.example.newsapp.api.NewsApi
 import com.example.newsapp.api.buildUrl
+import com.example.newsapp.model.DataState
 import com.example.newsapp.model.TopHeadLinesResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 
-interface TopNewsResults {
-    fun onResults()
-    fun onError()
-    fun onEmpty()
-}
-
 class HomePageInteractor(private val httpClient: HttpClient) : NewsApi {
 
-    override suspend fun fetchHomePageResults(): HomePageResults {
-        val topHeadLinesResponse = httpClient.get<TopHeadLinesResponse>() {
-            buildUrl(
-                path = "v2/top-headlines",
-                listOf(
-                    Pair("country", "us"),
-                    Pair("pageSize", "11")
+    override suspend fun fetchHomePageResults(): DataState<HomePageResults> {
+        try {
+            val topHeadLinesResponse = httpClient.get<TopHeadLinesResponse>() {
+                buildUrl(
+                    path = "v2/top-headlines",
+                    listOf(
+                        Pair("country", "us"),
+                        Pair("pageSize", "11")
+                    )
+                )
+            }
+            if (topHeadLinesResponse.totalResults == 0) {
+                return DataState.Empty
+            }
+            val results = HomePageResults(
+                topNews = topHeadLinesResponse.articles.firstOrNull(),
+                articles = topHeadLinesResponse.articles.subList(
+                    1,
+                    topHeadLinesResponse.articles.size
                 )
             )
+            return DataState.Success(results)
+        } catch (e: Exception) {
+            return DataState.Error(e.toString())
         }
-
-        return HomePageResults(
-            topNews = topHeadLinesResponse.articles.firstOrNull(),
-            articles = topHeadLinesResponse.articles.subList(1, topHeadLinesResponse.articles.size)
-        )
     }
 }

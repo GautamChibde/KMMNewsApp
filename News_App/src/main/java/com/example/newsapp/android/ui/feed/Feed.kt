@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Error
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -19,11 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.newsapp.model.Article
 import com.example.newsapp.android.theme.NewsAppTypography
 import com.example.newsapp.android.ui.HomeViewModel
 import com.example.newsapp.interactor.HomePageResults
+import com.example.newsapp.model.Article
+import com.example.newsapp.model.DataState
 import com.google.accompanist.coil.rememberCoilPainter
 
 class SampleArticleListProvider : PreviewParameterProvider<List<Article>> {
@@ -43,11 +47,50 @@ class SampleArticleProvider : PreviewParameterProvider<Article> {
 @Composable
 fun FeedsPage(viewModel: HomeViewModel) {
     viewModel.getHomePageResults()
-    val results = viewModel.topNewsResults.observeAsState(HomePageResults(null, listOf()))
-    val firstItem = results.value.topNews
-    Column {
-        TopNews(article = firstItem)
-        BreakingNewsItems(articles = results.value.articles)
+    val state = viewModel.topNewsResults.observeAsState(initial = DataState.Loading)
+    when (state.value) {
+        is DataState.Loading -> {
+            FullScreenCenterComposable {
+                CircularProgressIndicator()
+            }
+        }
+        DataState.Empty -> {
+            FullScreenCenterComposable {
+                Text(text = "Nothing found at the moment")
+            }
+        }
+        is DataState.Error -> {
+            FullScreenCenterComposable {
+                Column(horizontalAlignment = Alignment.CenterHorizontally,) {
+                    Icon(
+                        imageVector = Icons.Outlined.Error,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(text = "Something went wrong", style = NewsAppTypography.subtitle1)
+                }
+            }
+        }
+        is DataState.Success -> {
+            val results = (state.value as DataState.Success<HomePageResults>).data
+            Column {
+                TopNews(article = results.topNews)
+                BreakingNewsItems(articles = results.articles)
+            }
+        }
+    }
+}
+
+@Composable
+fun FullScreenCenterComposable(content: @Composable() () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        content()
     }
 }
 
