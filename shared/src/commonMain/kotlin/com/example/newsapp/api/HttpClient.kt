@@ -1,7 +1,5 @@
 package com.example.newsapp.api
 
-import com.example.newsapp.interactor.HomePageResults
-import com.example.newsapp.model.TopHeadLinesResponse
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*

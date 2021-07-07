@@ -1,7 +1,9 @@
 package com.example.newsapp
 
 import com.example.newsapp.api.getKtorHttpClient
-import com.example.newsapp.interactor.HomePageInteractor
+import com.example.newsapp.interactor.FeedsIntaractor
+import com.example.newsapp.interactor.NewsCategoryIntaractor
+import com.example.newsapp.interactor.SearchIntaractor
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -34,7 +36,7 @@ private val coreModule = module {
         getKtorHttpClient()
     }
 
-    single {
-        HomePageInteractor(get())
-    }
+    single { FeedsIntaractor(get()) }
+    single { NewsCategoryIntaractor(get()) }
+    single { SearchIntaractor(get()) }
 }

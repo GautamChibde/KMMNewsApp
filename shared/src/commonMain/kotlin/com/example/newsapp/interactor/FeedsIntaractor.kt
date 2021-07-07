@@ -3,15 +3,15 @@ package com.example.newsapp.interactor
 import com.example.newsapp.api.NewsApi
 import com.example.newsapp.api.buildUrl
 import com.example.newsapp.model.DataState
-import com.example.newsapp.model.TopHeadLinesResponse
+import com.example.newsapp.model.NewsApiResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 
-class HomePageInteractor(private val httpClient: HttpClient) : NewsApi {
+class FeedsIntaractor(private val httpClient: HttpClient) : NewsApi {
 
     override suspend fun fetchHomePageResults(): DataState<HomePageResults> {
         try {
-            val topHeadLinesResponse = httpClient.get<TopHeadLinesResponse>() {
+            val topHeadLinesResponse = httpClient.get<NewsApiResponse>() {
                 buildUrl(
                     path = "v2/top-headlines",
                     listOf(
