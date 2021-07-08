@@ -13,7 +13,7 @@ class NewsApplication: Application() {
         initKoin(
             module {
                 single { this@NewsApplication }
-                viewModel { HomeViewModel(get()) }
+                viewModel { HomeViewModel(get(), get()) }
             }
         )
     }

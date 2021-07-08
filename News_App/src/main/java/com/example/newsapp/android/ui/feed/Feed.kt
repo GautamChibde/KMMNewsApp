@@ -101,7 +101,7 @@ fun TopNews(@PreviewParameter(SampleArticleProvider::class) article: Article?) {
         Box(
             Modifier
                 .height(340.dp)
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
         ) {
             Image(
                 painter = rememberCoilPainter(request = article.urlToImage),
@@ -121,7 +121,7 @@ fun TopNews(@PreviewParameter(SampleArticleProvider::class) article: Article?) {
                 Box(
                     Modifier
                         .clip(RoundedCornerShape(16.dp))
-                        .background(color = Color.LightGray.copy(alpha = 0.5f))
+                        .background(color = Color.Black.copy(alpha = 0.5f))
                         .padding(8.dp)
                 ) {
                     Text(
@@ -141,9 +141,7 @@ fun TopNews(@PreviewParameter(SampleArticleProvider::class) article: Article?) {
             }
         }
     } ?: run {
-        Box {
-
-        }
+        Box {}
     }
 }
 

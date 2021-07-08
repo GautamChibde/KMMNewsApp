@@ -1,5 +1,6 @@
 package com.example.newsapp.android
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ object MainDestinations {
     const val SEARCH = "SEARCH"
 }
 
+@ExperimentalFoundationApi
 @ExperimentalPagerApi
 @Composable
 fun NewsAppNavGraph(

@@ -1,10 +1,12 @@
 package com.example.newsapp.android.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
@@ -18,21 +20,23 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.newsapp.android.ui.feed.FeedsPage
+import com.example.newsapp.android.ui.profile.Profile
 import com.example.newsapp.android.ui.search.Search
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 
+@ExperimentalFoundationApi
 @ExperimentalPagerApi
 fun NavGraphBuilder.addHomeGraph(homeViewModel: HomeViewModel) {
     composable(HomeSections.FEED.route) { from ->
         FeedsPage(homeViewModel)
     }
     composable(HomeSections.SEARCH.route) { from ->
-        Search()
+        Search(homeViewModel)
     }
-//    composable(HomeSections.PROFILE.route) {
-//        Profile()
-//    }
+    composable(HomeSections.PROFILE.route) {
+        Profile()
+    }
 }
 
 enum class HomeSections(
@@ -41,8 +45,8 @@ enum class HomeSections(
     val route: String
 ) {
     FEED("Feed", Icons.Outlined.Home, "home/feed"),
-    SEARCH("Search", Icons.Outlined.Search, "home/search")
-//    PROFILE("Profile", Icons.Outlined.AccountCircle, "home/profile")
+    SEARCH("Search", Icons.Outlined.Search, "home/search"),
+    PROFILE("Explore", Icons.Outlined.Explore, "home/explore")
 }
 
 
