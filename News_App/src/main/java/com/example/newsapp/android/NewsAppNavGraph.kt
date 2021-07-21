@@ -2,22 +2,42 @@ package com.example.newsapp.android
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Explore
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.example.newsapp.android.ui.HomeSections
 import com.example.newsapp.android.ui.HomeViewModel
-import com.example.newsapp.android.ui.addHomeGraph
+import com.example.newsapp.android.ui.feed.FeedsPage
+import com.example.newsapp.android.ui.profile.CategoryScreen
+import com.example.newsapp.android.ui.profile.Profile
+import com.example.newsapp.android.ui.search.Search
+import com.example.newsapp.model.NewsCategories
 import com.google.accompanist.pager.ExperimentalPagerApi
-
 
 object MainDestinations {
     const val HOME_ROUTE = "home"
-    const val LATEST_NEWS = "LATEST_NEWS"
-    const val SEARCH = "SEARCH"
+    const val LATEST_NEWS = "latest_news"
+    const val SEARCH = "search"
+    const val NEWS_CATEGORY = "news_category/{category}"
+}
+
+enum class HomeSections(
+    val title: String,
+    val icon: ImageVector,
+    val route: String
+) {
+    FEED("Feed", Icons.Outlined.Home, "home/feed"),
+    SEARCH("Search", Icons.Outlined.Search, "home/search"),
+    PROFILE("Explore", Icons.Outlined.Explore, "home/explore")
 }
 
 @ExperimentalFoundationApi
@@ -37,7 +57,24 @@ fun NewsAppNavGraph(
             route = MainDestinations.HOME_ROUTE,
             startDestination = HomeSections.FEED.route
         ) {
-            addHomeGraph(homeViewModel)
+            composable(HomeSections.FEED.route) {
+                FeedsPage(homeViewModel)
+            }
+            composable(HomeSections.SEARCH.route) {
+                Search(homeViewModel)
+            }
+            composable(HomeSections.PROFILE.route) {
+                Profile()
+            }
+            composable(
+                MainDestinations.NEWS_CATEGORY,
+                arguments = listOf(navArgument("category") {})
+            ) { bs ->
+                CategoryScreen(
+                    category = bs.arguments?.getString("category") ?: NewsCategories.Business.value,
+                    viewModel = homeViewModel
+                )
+            }
         }
     }
 }
