@@ -186,7 +186,7 @@ fun BreakingNewsItem(@PreviewParameter(SampleArticleProvider::class) article: Ar
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = article.title, style = NewsAppTypography.subtitle1, maxLines = 3)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "4 hr ago", style = NewsAppTypography.caption.copy(color = Color.Gray))
+            Text(text = article.publishedAt, style = NewsAppTypography.caption.copy(color = Color.Gray))
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = "By ${article.author}",

@@ -2,12 +2,12 @@ package com.example.newsapp.android.ui.profile
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,16 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.toUpperCase
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.newsapp.android.theme.NewsAppTypography
 import com.example.newsapp.model.NewsCategories
 import java.util.*
 
-
-val gradients = listOf<Brush>(
+val gradients = listOf(
     Brush.horizontalGradient(
         colors = listOf(
             Color(0xff00b09b),
@@ -77,9 +74,8 @@ val gradients = listOf<Brush>(
 )
 
 @ExperimentalFoundationApi
-@Preview
 @Composable
-fun Profile() {
+fun Explore(navController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -94,7 +90,10 @@ fun Profile() {
                         .height(125.dp)
                         .padding(8.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(gradients[index]),
+                        .background(gradients[index])
+                        .clickable {
+                            navController.navigate("news_category/${item.value}")
+                        },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {

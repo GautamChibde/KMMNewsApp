@@ -5,7 +5,12 @@ enum class NewsCategories(val value: String) {
     Entertainment("entertainment"),
     General("general"),
     Health("health"),
-    Scienc("science"),
-    Esports("esports"),
-    Technology("technology"),
+    Science("science"),
+    Sports("sports"),
+    Technology("technology");
+
+    companion object {
+        private val map = NewsCategories.values().associateBy(NewsCategories::value)
+        fun from(type: String) = map[type]
+    }
 }

@@ -1,11 +1,20 @@
 package com.example.newsapp.model
 
+import com.example.newsapp.utils.DateUtils
+import kotlinx.datetime.Instant
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class Article(
     val author: String?,
     val description: String?,
+    @Serializable(with = DateSerializer::class)
     val publishedAt: String,
     val source: Source,
     val title: String,
@@ -64,4 +73,17 @@ data class Article(
             )
         )
     }
+}
+
+
+object DateSerializer : KSerializer<String> {
+    override fun deserialize(decoder: Decoder) =
+        DateUtils.getTimeAgo(Instant.parse(decoder.decodeString()))
+
+    override fun serialize(encoder: Encoder, value: String) {
+        encoder.encodeString(value)
+    }
+
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("publishedAt", PrimitiveKind.STRING)
 }

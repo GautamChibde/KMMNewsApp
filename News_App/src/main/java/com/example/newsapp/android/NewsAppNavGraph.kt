@@ -18,7 +18,8 @@ import androidx.navigation.navigation
 import com.example.newsapp.android.ui.HomeViewModel
 import com.example.newsapp.android.ui.feed.FeedsPage
 import com.example.newsapp.android.ui.profile.CategoryScreen
-import com.example.newsapp.android.ui.profile.Profile
+import com.example.newsapp.android.ui.profile.CategoryViewModel
+import com.example.newsapp.android.ui.profile.Explore
 import com.example.newsapp.android.ui.search.Search
 import com.example.newsapp.model.NewsCategories
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -47,7 +48,8 @@ fun NewsAppNavGraph(
     navController: NavHostController = rememberNavController(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     startDestination: String = MainDestinations.HOME_ROUTE,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    categoryViewModel: CategoryViewModel
 ) {
     NavHost(
         navController = navController,
@@ -64,15 +66,17 @@ fun NewsAppNavGraph(
                 Search(homeViewModel)
             }
             composable(HomeSections.PROFILE.route) {
-                Profile()
+                Explore(navController)
             }
             composable(
                 MainDestinations.NEWS_CATEGORY,
                 arguments = listOf(navArgument("category") {})
             ) { bs ->
                 CategoryScreen(
-                    category = bs.arguments?.getString("category") ?: NewsCategories.Business.value,
-                    viewModel = homeViewModel
+                    category = bs.arguments?.getString("category")?.let { NewsCategories.from(it) }
+                        ?: NewsCategories.Business,
+                    navController = navController,
+                    viewModel = categoryViewModel
                 )
             }
         }
