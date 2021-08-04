@@ -8,7 +8,7 @@ plugins {
 }
 
 version = "1.0"
-val ktorVersion = "1.5.0"
+val ktorVersion = "1.5.3"
 val koinVersion = "3.0.2"
 
 kotlin {

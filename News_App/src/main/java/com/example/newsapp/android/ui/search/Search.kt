@@ -49,7 +49,9 @@ fun Search(viewModel: HomeViewModel) {
             }
             is DataState.Success -> {
                 val results = (state.value as DataState.Success<SearchResults>).data
-                ArticleList(articles = results.articles)
+                ArticleList(articles = results.articles) {
+
+                }
             }
         }
     }

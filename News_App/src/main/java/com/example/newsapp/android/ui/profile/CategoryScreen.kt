@@ -66,7 +66,9 @@ fun CategoryScreen(
             }
             is DataState.Success -> {
                 val results = (state.value as DataState.Success<List<Article>>).data
-                ArticleList(articles = results)
+                ArticleList(articles = results) {
+
+                }
             }
         }
     }

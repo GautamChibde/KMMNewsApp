@@ -1,6 +1,7 @@
 package com.example.newsapp.android.ui.search
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,17 +19,19 @@ import com.example.newsapp.model.Article
 import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
-fun ArticleList(articles: List<Article>) {
+fun ArticleList(articles: List<Article>, onArticleClicked: (article: Article) -> Unit) {
     LazyColumn {
         items(articles) { item ->
-            ArticleListItem(item)
+            ArticleListItem(item, onArticleClicked)
         }
     }
 }
 
 @Composable
-fun ArticleListItem(article: Article) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+fun ArticleListItem(article: Article, onArticleClicked: (article: Article) -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable { onArticleClicked(article) }) {
         Image(
             painter = rememberCoilPainter(request = article.urlToImage),
             contentDescription = "",

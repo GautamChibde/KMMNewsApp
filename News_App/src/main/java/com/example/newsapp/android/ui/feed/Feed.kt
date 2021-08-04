@@ -1,7 +1,9 @@
 package com.example.newsapp.android.ui.feed
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,10 +21,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.newsapp.android.theme.NewsAppTypography
 import com.example.newsapp.android.ui.HomeViewModel
 import com.example.newsapp.interactor.HomePageResults
@@ -45,7 +47,7 @@ class SampleArticleProvider : PreviewParameterProvider<Article> {
 }
 
 @Composable
-fun FeedsPage(viewModel: HomeViewModel) {
+fun FeedsPage(viewModel: HomeViewModel, navController: NavHostController) {
     viewModel.getHomePageResults()
     val state = viewModel.topNewsResults.observeAsState(initial = DataState.Loading)
     when (state.value) {
@@ -61,7 +63,7 @@ fun FeedsPage(viewModel: HomeViewModel) {
         }
         is DataState.Error -> {
             FullScreenCenterComposable {
-                Column(horizontalAlignment = Alignment.CenterHorizontally,) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(
                         imageVector = Icons.Outlined.Error,
                         contentDescription = null
@@ -74,8 +76,18 @@ fun FeedsPage(viewModel: HomeViewModel) {
         is DataState.Success -> {
             val results = (state.value as DataState.Success<HomePageResults>).data
             Column {
-                TopNews(article = results.topNews)
-                BreakingNewsItems(articles = results.articles)
+                TopNews(article = results.topNews) { url ->
+                    navController.currentBackStackEntry?.arguments = Bundle().apply {
+                        putSerializable("url", url)
+                    }
+                    navController.navigate("article_detail")
+                }
+                BreakingNewsItems(articles = results.articles) { url ->
+                    navController.currentBackStackEntry?.arguments = Bundle().apply {
+                        putSerializable("url", url)
+                    }
+                    navController.navigate("article_detail")
+                }
             }
         }
     }
@@ -94,14 +106,17 @@ fun FullScreenCenterComposable(content: @Composable() () -> Unit) {
     }
 }
 
-@Preview
 @Composable
-fun TopNews(@PreviewParameter(SampleArticleProvider::class) article: Article?) {
+fun TopNews(
+    @PreviewParameter(SampleArticleProvider::class) article: Article?,
+    onItemClicked: (url: String) -> Unit
+) {
     article?.let {
         Box(
             Modifier
                 .height(340.dp)
                 .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
+                .clickable { onItemClicked(article.url) }
         ) {
             Image(
                 painter = rememberCoilPainter(request = article.urlToImage),
@@ -145,9 +160,11 @@ fun TopNews(@PreviewParameter(SampleArticleProvider::class) article: Article?) {
     }
 }
 
-@Preview
 @Composable
-fun BreakingNewsItems(@PreviewParameter(SampleArticleListProvider::class) articles: List<Article>) {
+fun BreakingNewsItems(
+    @PreviewParameter(SampleArticleListProvider::class) articles: List<Article>,
+    onItemClicked: (url: String) -> Unit
+) {
     Row(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp)
     ) {
@@ -158,19 +175,22 @@ fun BreakingNewsItems(@PreviewParameter(SampleArticleListProvider::class) articl
 
     LazyRow {
         items(articles) { item ->
-            BreakingNewsItem(article = item)
+            BreakingNewsItem(article = item, onItemClicked)
         }
     }
 
 }
 
-@Preview
 @Composable
-fun BreakingNewsItem(@PreviewParameter(SampleArticleProvider::class) article: Article) {
+fun BreakingNewsItem(
+    @PreviewParameter(SampleArticleProvider::class) article: Article,
+    onItemClicked: (url: String) -> Unit
+) {
     Box(
         modifier = Modifier
             .padding(start = 16.dp, bottom = 16.dp, end = 16.dp)
             .width(240.dp)
+            .clickable { onItemClicked(article.url) }
     ) {
         Column {
             Image(
@@ -186,7 +206,10 @@ fun BreakingNewsItem(@PreviewParameter(SampleArticleProvider::class) article: Ar
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = article.title, style = NewsAppTypography.subtitle1, maxLines = 3)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = article.publishedAt, style = NewsAppTypography.caption.copy(color = Color.Gray))
+            Text(
+                text = article.publishedAt,
+                style = NewsAppTypography.caption.copy(color = Color.Gray)
+            )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = "By ${article.author}",

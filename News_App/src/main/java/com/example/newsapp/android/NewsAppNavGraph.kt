@@ -16,6 +16,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.newsapp.android.ui.HomeViewModel
+import com.example.newsapp.android.ui.detail.ArticleDetailScreen
 import com.example.newsapp.android.ui.feed.FeedsPage
 import com.example.newsapp.android.ui.profile.CategoryScreen
 import com.example.newsapp.android.ui.profile.CategoryViewModel
@@ -29,6 +30,7 @@ object MainDestinations {
     const val LATEST_NEWS = "latest_news"
     const val SEARCH = "search"
     const val NEWS_CATEGORY = "news_category/{category}"
+    const val ARTICLE_DETAIL = "article_detail"
 }
 
 enum class HomeSections(
@@ -60,13 +62,18 @@ fun NewsAppNavGraph(
             startDestination = HomeSections.FEED.route
         ) {
             composable(HomeSections.FEED.route) {
-                FeedsPage(homeViewModel)
+                FeedsPage(homeViewModel, navController)
             }
             composable(HomeSections.SEARCH.route) {
                 Search(homeViewModel)
             }
             composable(HomeSections.PROFILE.route) {
                 Explore(navController)
+            }
+            composable(
+                MainDestinations.ARTICLE_DETAIL
+            ) {
+                ArticleDetailScreen(navController)
             }
             composable(
                 MainDestinations.NEWS_CATEGORY,
