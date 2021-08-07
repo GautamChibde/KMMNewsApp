@@ -1,14 +1,13 @@
 package com.example.newsapp.api
 
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-fun getKtorHttpClient() = HttpClient(CIO) {
+fun getKtorHttpClient() = HttpClient {
 
     install(JsonFeature) {
         serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
@@ -16,10 +15,6 @@ fun getKtorHttpClient() = HttpClient(CIO) {
             isLenient = true
             ignoreUnknownKeys = true
         })
-    }
-
-    engine {
-        requestTimeout = 100_000
     }
 
     install(Logging) {

@@ -6,18 +6,36 @@ struct Art: Identifiable, Hashable {
     let id = UUID()
 }
 
+
+extension Article : Identifiable {
+    public var id: UUID { return UUID() }
+}
+
 struct ContentView: View {
-    let articles = Article.Companion().dummyData.map {Art(title: $0.title)}
+    @State var articleHome: HomePageResults
+    
+    var adapter: HomePageViewModel = HomePageViewModel(
+        onLoading: {
+            
+        }, onSuccess: { data in
+            print("success")
+        }, onError: { error in
+            print("error " + error)
+        }, onEmpty: {
+            
+        }
+    )
     
 	var body: some View {
-        List(articles) {
-            Text($0.title)
+      Text("something")
+        List(articleHome.articles) { item in
+            ArticleItemRow(article: item)
         }
 	}
 }
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-	ContentView()
+        ContentView(articleHome: HomePageResults(topNews: Article.Companion().dummyData.first, articles: Article.Companion().dummyData))
 	}
 }
