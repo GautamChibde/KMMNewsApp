@@ -2,13 +2,14 @@ package com.example.newsapp.interactor
 
 import com.example.newsapp.api.SearchApi
 import com.example.newsapp.api.buildUrl
+import com.example.newsapp.model.Article
 import com.example.newsapp.model.DataState
 import com.example.newsapp.model.NewsApiResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 
 class SearchIntaractor(val httpClient: HttpClient) : SearchApi {
-    override suspend fun searchResults(query: String): DataState<SearchResults> {
+    override suspend fun searchResults(query: String): DataState<List<Article>> {
         try {
             val results = httpClient.get<NewsApiResponse>() {
                 buildUrl(
@@ -20,7 +21,7 @@ class SearchIntaractor(val httpClient: HttpClient) : SearchApi {
             }
 
             if (results.totalResults == 0) return DataState.Empty
-            return DataState.Success(SearchResults(results.articles))
+            return DataState.Success(results.articles)
         } catch (e: Exception) {
             return DataState.Error(e.toString())
         }

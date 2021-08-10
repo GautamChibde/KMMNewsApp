@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.newsapp.android.theme.NewsAppTypography
 import com.example.newsapp.android.ui.HomeViewModel
 import com.example.newsapp.android.ui.feed.FullScreenCenterComposable
-import com.example.newsapp.interactor.SearchResults
+import com.example.newsapp.model.Article
 import com.example.newsapp.model.DataState
 
 @Composable
@@ -48,8 +48,8 @@ fun Search(viewModel: HomeViewModel) {
                 }
             }
             is DataState.Success -> {
-                val results = (state.value as DataState.Success<SearchResults>).data
-                ArticleList(articles = results.articles) {
+                val results = (state.value as DataState.Success<List<Article>>).data
+                ArticleList(articles = results) {
 
                 }
             }

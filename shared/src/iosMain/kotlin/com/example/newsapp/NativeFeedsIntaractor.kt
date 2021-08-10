@@ -9,7 +9,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.native.concurrent.ensureNeverFrozen
 
-class HomePageViewModel(
+class NativeFeedsIntaractor(
     private val onLoading: () -> Unit,
     private val onSuccess: (HomePageResults) -> Unit,
     private val onError: (String) -> Unit,
@@ -21,6 +21,9 @@ class HomePageViewModel(
 
     init {
         ensureNeverFrozen()
+    }
+
+    fun fetchResults() {
         observeFeedResults()
     }
 

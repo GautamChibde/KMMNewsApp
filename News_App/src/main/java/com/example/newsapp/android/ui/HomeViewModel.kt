@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsapp.interactor.FeedsIntaractor
 import com.example.newsapp.interactor.HomePageResults
 import com.example.newsapp.interactor.SearchIntaractor
-import com.example.newsapp.interactor.SearchResults
+import com.example.newsapp.model.Article
 import com.example.newsapp.model.DataState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,9 +22,9 @@ class HomeViewModel(
     val topNewsResults: LiveData<DataState<HomePageResults>> = _topNewsResults
 
 
-    private val _searchResults = MutableLiveData<DataState<SearchResults>>(DataState.Empty)
+    private val _searchResults = MutableLiveData<DataState<List<Article>>>(DataState.Empty)
 
-    val searchResults: LiveData<DataState<SearchResults>> = _searchResults
+    val searchResults: LiveData<DataState<List<Article>>> = _searchResults
 
     fun getHomePageResults() {
         viewModelScope.launch(Dispatchers.IO) {
