@@ -24,21 +24,25 @@ struct ArticleItemRow: View {
             }
             
             Text(article.title)
+                .font(.system(size: 16))
+                .foregroundColor(.black)
+                .lineLimit(1)
+            Text(article.description_ ?? "")
+                .font(.system(size: 14))
+                .foregroundColor(.gray)
+                .lineLimit(2)
             
-            Text(article.description)
-            
-            Text(article.source.name)
-            
-            Tex
-                        
-//            Text(article.urlToImage ?? "")
-//                .font(.system(size: 26, weight: .bold, design: .default))
-//                .foregroundColor(.white)
-//                .lineLimit(1)
-//            Text(article.description)
-//                .font(.system(size: 16, weight: .bold, design: .default))
-//                .foregroundColor(.gray)
-//                .lineLimit(2)
+            HStack {
+                Text(article.source.name)
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
+                    .lineLimit(1)
+                Spacer(minLength: 16)
+                Text(article.publishedAt)
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
+                    .lineLimit(1)
+            }
         }
     }
 }

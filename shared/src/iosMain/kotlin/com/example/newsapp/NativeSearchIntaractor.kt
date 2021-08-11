@@ -10,7 +10,10 @@ import org.koin.core.component.inject
 import kotlin.native.concurrent.ensureNeverFrozen
 
 class NativeSearchIntaractor(
-    private val onResults: (DataState<List<Article>>) -> Unit,
+    private val onLoading: () -> Unit,
+    private val onSuccess: (List<Article>) -> Unit,
+    private val onError: (String) -> Unit,
+    private val onEmpty: () -> Unit
 ) : KoinComponent {
 
     private val scope = MainScope(Dispatchers.Main)
@@ -22,8 +25,20 @@ class NativeSearchIntaractor(
 
     fun searchResults(query: String) {
         scope.launch {
-            val results = searchIntaractor.searchResults(query)
-            onResults(results)
+            when (val results = searchIntaractor.searchResults(query)) {
+                is DataState.Success -> {
+                    onSuccess(results.data)
+                }
+                is DataState.Error -> {
+                    onError(results.exception)
+                }
+                DataState.Empty -> {
+                    onEmpty()
+                }
+                DataState.Loading -> {
+                    onLoading()
+                }
+            }
         }
     }
 
